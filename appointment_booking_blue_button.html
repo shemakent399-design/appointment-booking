@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Appointment Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .booking-form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    .booking-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .booking-form input, .booking-form button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 5px;
+    }
+    .booking-form input {
+      border: 1px solid #ccc;
+    }
+    .booking-form button {
+      background-color: #007BFF; /* Blue */
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .booking-form button:hover {
+      background-color: #0056b3; /* Darker blue */
+    }
+  </style>
+</head>
+<body>
+  <form class="booking-form" id="bookingForm">
+    <h2>Book an Appointment</h2>
+    <input type="text" id="firstName" placeholder="First Name" required>
+    <input type="text" id="lastName" placeholder="Last Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="tel" id="contact" placeholder="Contact Number" required>
+    <input type="date" id="date" required>
+    <button type="submit">Book Now</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      
+      const data = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        contact: document.getElementById('contact').value,
+        date: document.getElementById('date').value
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbyjp-N8UAEGMI8HS8tJUSoYsD2UkD34T5aUE5rKkVXHiasH2wAU_kg8A8P__5QirR0Fdg/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(result => {
+        alert('Appointment booked successfully!');
+        form.reset();
+      })
+      .catch(error => {
+        alert('Error booking appointment.');
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
